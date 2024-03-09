@@ -1,0 +1,46 @@
+{
+    "yAxis": {
+        "type": "category",
+        "data": [
+            "demo1",
+            "demo2"
+        ]
+    },
+    "series": [
+        {
+            "type": "custom",
+            "renderItem": "renderProfile",
+            "encode": {
+                "x": [
+                    1,
+                    2
+                ],
+                "y": 0
+            },
+            "data": [
+                {
+                    "name": "demo",
+                    "value": [
+                        0,
+                        10,
+                        40
+                    ],
+                    "itemStyle": {
+                        "color": "#7b9ce1"
+                    }
+                },
+                {
+                    "name": "demo",
+                    "value": [
+                        1,
+                        10,
+                        20
+                    ],
+                    "itemStyle": {
+                        "color": "#7b9ce1"
+                    }
+                }
+            ]
+        }
+    ]
+}

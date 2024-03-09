@@ -1,8 +1,13 @@
 'use client'
 import { useState } from 'react';
 
+import merge from 'deepmerge';
+
 import Echart from '@/components/Echart';
-import Uploader from '@/components/Uploader'
+import Uploader from '@/components/Uploader';
+
+const customRender = {
+}
 
 const charts = [
     {
@@ -13,14 +18,20 @@ const charts = [
             series: [],
         }
     }
-];
+]
 
 export default function Page() {
     const [curIdx, setCurIdx] = useState(0)
     const [option, setOption] = useState({})
 
     const OnUpload = (data) => {
-        setOption(Object.assign(charts[curIdx].option || {}, data))
+        (data.series || []).map((se) => {
+            if ((se.renderItem || '') in customRender) {
+                se.renderItem = customRender[se.renderItem];
+            }
+        })
+        const option = merge(charts[curIdx].option, data)
+        setOption(option)
     }
 
     return (
