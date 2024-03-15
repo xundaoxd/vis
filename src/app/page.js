@@ -1,65 +1,25 @@
-'use client'
-import { useState } from 'react';
+import Link from 'next/link'
 
-import merge from 'deepmerge';
-
-import Echart from '@/components/Echart';
-import Uploader from '@/components/Uploader';
-
-const customRender = {
-}
-
-const charts = [
-    {
-        name: 'Custom',
-        option: {
-            xAxis: {},
-            yAxis: {},
-            series: [],
-        }
-    }
+const links = [
+    { title: 'asd', link: '' },
+    { title: 'asd', link: '' },
 ]
 
 export default function Page() {
-    const [curIdx, setCurIdx] = useState(0)
-    const [option, setOption] = useState({})
-
-    const OnUpload = (data) => {
-        (data.series || []).map((se) => {
-            if ((se.renderItem || '') in customRender) {
-                se.renderItem = customRender[se.renderItem];
-            }
-        })
-        const option = merge(charts[curIdx].option, data)
-        setOption(option)
-    }
-
     return (
-        <div className='flex flex-row bg-gray-100'>
-            <div className='w-72 h-screen shrink-0 grow-0 bg-white'>
-                <div className='my-14'>
-                    <h1 className='text-center'>Echart 可视化</h1>
-                </div>
-                <ul>
-                    {charts.map((chart, idx) => {
-                        return (
-                            <li
-                                key={idx}
-                                onClick={() => { setCurIdx(idx); }}
-                                className={'p-4 hover:cursor-pointer hover:bg-gray-200' + (curIdx === idx ? ' bg-gray-200' : '')}
-                            >
-                                <span>{chart.name}</span>
-                            </li>)
+        <div className='min-w-full min-h-screen bg-zinc-900'>
+            <div className='mx-auto container'>
+                <div className='py-8'></div>
+                <h1 className='text-white text-4xl font-medium'>Applications</h1>
+                <div className='py-4'></div>
+                <div className='flex flex-row flex-wrap space-x-6'>
+                    {links.map((item, idx) => {
+                        return <Link key={idx} href={item.link}>
+                            <div className='group min-w-52 min-h-16 rounded-lg border-2 border-zinc-500 hover:border-zinc-200 border-solid p-2'>
+                                <h2 className='text-zinc-500 group-hover:text-zinc-200'>{item.title}</h2>
+                            </div>
+                        </Link>
                     })}
-                </ul>
-            </div>
-            <div className='shrink grow'>
-                <div className='mx-auto w-fit h-fit bg-white py-20 px-8'>
-                    <Uploader OnData={OnUpload} />
-                    <Echart option={option} style={{
-                        minWidth: '1200px',
-                        minHeight: '600px'
-                    }} />
                 </div>
             </div>
         </div>
